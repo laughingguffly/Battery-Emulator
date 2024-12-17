@@ -22,15 +22,15 @@
 #error You must select a HW to run on!
 #endif
 
-#if defined(DUAL_CAN) && defined(CAN_FD)
+#if defined(CAN_ADDON) && defined(CANFD_ADDON)
 // Check that user did not try to use dual can and fd-can on same hardware pins
-#error CAN-FD AND DUAL-CAN CANNOT BE USED SIMULTANEOUSLY
+#error CAN_ADDON AND CANFD_ADDON CANNOT BE USED SIMULTANEOUSLY
 #endif
 
 #ifdef USE_CANFD_INTERFACE_AS_CLASSIC_CAN
-#if !defined(CAN_FD)
+#if !defined(CANFD_ADDON)
 // Check that user did not try to use classic CAN over FD, without FD component
-#error PLEASE ENABLE CAN_FD TO USE CLASSIC CAN OVER CANFD INTERFACE
+#error PLEASE ENABLE CANFD_ADDON TO USE CLASSIC CAN OVER CANFD INTERFACE
 #endif
 #endif
 
@@ -38,6 +38,13 @@
 #if defined(SERIAL_LINK_RECEIVER) || defined(SERIAL_LINK_TRANSMITTER)
 // Check that Dual LilyGo via RS485 option isn't enabled, this collides with Modbus!
 #error MODBUS CANNOT BE USED IN DOUBLE LILYGO SETUPS! CHECK USER SETTINGS!
+#endif
+#endif
+
+#ifdef RS485_INVERTER_SELECTED
+#if defined(SERIAL_LINK_RECEIVER) || defined(SERIAL_LINK_TRANSMITTER)
+// Check that Dual LilyGo via RS485 option isn't enabled, this collides with Modbus!
+#error RS485 CANNOT BE USED IN DOUBLE LILYGO SETUPS! CHECK USER SETTINGS!
 #endif
 #endif
 

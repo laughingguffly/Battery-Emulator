@@ -16,7 +16,7 @@ This software enables EV battery packs to be used for stationary storage. It ach
 ## Hardware requirements 📜
 This code fits on the LilyGo ESP32 T-CAN485 devboard , see https://github.com/Xinyuan-LilyGO/T-CAN485
 
-You will also need a complete EV battery. [See the battery compability list on which are supported.](https://github.com/dalathegreat/BYD-Battery-Emulator-For-Gen24/wiki#supported-batteries-list)
+You will also need a complete EV battery. [See the battery compatibility list on which are supported.](https://github.com/dalathegreat/BYD-Battery-Emulator-For-Gen24/wiki#supported-batteries-list)
 
 Finally, you will need a [compatible hybrid solar inverter](https://github.com/dalathegreat/BYD-Battery-Emulator-For-Gen24/wiki#supported-inverters-list), for example the "Fronius Gen24" or "GoodWe ET"
 
@@ -36,7 +36,7 @@ Here's how to wire up the communication between the components.
 Here's how to connect the high voltage lines
 ![HighVoltageWiring](https://github.com/dalathegreat/Battery-Emulator/assets/26695010/f70e6262-d630-4148-9a39-dad32e79b3d6)
 
-For more examples showing wiring, see each battery types own Wiki page. For instance the [Nissan LEAF page](https://github.com/dalathegreat/BYD-Battery-Emulator-For-Gen24/wiki/Nissan-LEAF-battery#wiring-diagram)
+For more examples showing wiring, see each battery types own Wiki page. For instance the [Nissan LEAF page](https://github.com/dalathegreat/Battery-Emulator/wiki/Battery:-Nissan-LEAF---e%E2%80%90NV200)
 
 ## How to compile the software 💻
 1. Download the Arduino IDE: https://www.arduino.cc/en/software

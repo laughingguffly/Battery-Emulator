@@ -144,6 +144,7 @@ void init_events(void) {
   events.entries[EVENT_CANMCP_INIT_FAILURE].level = EVENT_LEVEL_WARNING;
   events.entries[EVENT_CANFD_BUFFER_FULL].level = EVENT_LEVEL_WARNING;
   events.entries[EVENT_CAN_OVERRUN].level = EVENT_LEVEL_INFO;
+  events.entries[EVENT_CANFD_RX_OVERRUN].level = EVENT_LEVEL_WARNING;
   events.entries[EVENT_CAN_RX_FAILURE].level = EVENT_LEVEL_ERROR;
   events.entries[EVENT_CAN2_RX_FAILURE].level = EVENT_LEVEL_WARNING;
   events.entries[EVENT_CANFD_RX_FAILURE].level = EVENT_LEVEL_ERROR;
@@ -190,6 +191,7 @@ void init_events(void) {
   events.entries[EVENT_DUMMY_DEBUG].level = EVENT_LEVEL_DEBUG;
   events.entries[EVENT_DUMMY_WARNING].level = EVENT_LEVEL_WARNING;
   events.entries[EVENT_DUMMY_ERROR].level = EVENT_LEVEL_ERROR;
+  events.entries[EVENT_PERSISTENT_SAVE_INFO].level = EVENT_LEVEL_INFO;
   events.entries[EVENT_SERIAL_RX_WARNING].level = EVENT_LEVEL_WARNING;
   events.entries[EVENT_SERIAL_RX_FAILURE].level = EVENT_LEVEL_ERROR;
   events.entries[EVENT_SERIAL_TX_FAILURE].level = EVENT_LEVEL_ERROR;
@@ -270,6 +272,8 @@ const char* get_event_message_string(EVENTS_ENUM_TYPE event) {
       return "CAN-FD buffer overflowed. Some CAN messages were not sent. Contact developers.";
     case EVENT_CAN_OVERRUN:
       return "CAN message failed to send within defined time. Contact developers, CPU load might be too high.";
+    case EVENT_CANFD_RX_OVERRUN:
+      return "CAN-FD failed to receive all messages from CAN bus. Contact developers, CPU load might be too high.";
     case EVENT_CAN_RX_FAILURE:
       return "No CAN communication detected for 60s. Shutting down battery control.";
     case EVENT_CAN2_RX_FAILURE:
@@ -365,6 +369,8 @@ const char* get_event_message_string(EVENTS_ENUM_TYPE event) {
       return "The dummy warning event was set!";  // Don't change this event message!
     case EVENT_DUMMY_ERROR:
       return "The dummy error event was set!";  // Don't change this event message!
+    case EVENT_PERSISTENT_SAVE_INFO:
+      return "Info: Failed to save user settings. Namespace full?";
     case EVENT_SERIAL_RX_WARNING:
       return "Error in serial function: No data received for some time, see data for minutes";
     case EVENT_SERIAL_RX_FAILURE:

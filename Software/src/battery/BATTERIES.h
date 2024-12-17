@@ -20,6 +20,7 @@
 
 #ifdef CHADEMO_BATTERY
 #include "CHADEMO-BATTERY.h"
+#include "CHADEMO-SHUNTS.h"
 #endif
 
 #ifdef IMIEV_CZERO_ION_BATTERY
@@ -40,6 +41,10 @@
 
 #ifdef KIA_HYUNDAI_HYBRID_BATTERY
 #include "KIA-HYUNDAI-HYBRID-BATTERY.h"
+#endif
+
+#ifdef MEB_BATTERY
+#include "MEB-BATTERY.h"
 #endif
 
 #ifdef MG_5_BATTERY
