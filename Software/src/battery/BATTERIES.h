@@ -10,6 +10,10 @@
 #include "BMW-IX-BATTERY.h"
 #endif
 
+#ifdef BOLT_AMPERA_BATTERY
+#include "BOLT-AMPERA-BATTERY.h"
+#endif
+
 #ifdef BYD_ATTO_3_BATTERY
 #include "BYD-ATTO-3-BATTERY.h"
 #endif
@@ -21,6 +25,10 @@
 #ifdef CHADEMO_BATTERY
 #include "CHADEMO-BATTERY.h"
 #include "CHADEMO-SHUNTS.h"
+#endif
+
+#ifdef STELLANTIS_ECMP_BATTERY
+#include "ECMP-BATTERY.h"
 #endif
 
 #ifdef IMIEV_CZERO_ION_BATTERY
@@ -104,14 +112,14 @@
 #include "SERIAL-LINK-RECEIVER-FROM-BATTERY.h"
 #endif
 
-void receive_can_battery(CAN_frame rx_frame);
+void handle_incoming_can_frame_battery(CAN_frame rx_frame);
 void update_values_battery();
-void send_can_battery();
+void transmit_can_battery();
 void setup_battery(void);
 
 #ifdef DOUBLE_BATTERY
 void update_values_battery2();
-void receive_can_battery2(CAN_frame rx_frame);
+void handle_incoming_can_frame_battery2(CAN_frame rx_frame);
 #endif
 
 #endif

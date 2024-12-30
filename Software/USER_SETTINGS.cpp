@@ -1,5 +1,6 @@
 #include "USER_SETTINGS.h"
 #include <string>
+#include "USER_SECRETS.h"
 #include "src/devboard/hal/hal.h"
 
 /* This file contains all the battery settings and limits */
@@ -28,19 +29,12 @@ const char* ssidAP = "Battery Emulator";  // Maximum of 63 characters, also used
 const char* passwordAP = "rkekej";  // Minimum of 8 characters; set to NULL if you want the access point to be open
 const uint8_t wifi_channel = 0;        // Set to 0 for automatic channel selection
 
-#ifdef WIFICONFIG
-// Set your Static IP address
-IPAddress local_IP(192, 168, 10, 150);
-// Set your Gateway IP address
-IPAddress gateway(192, 168, 10, 1);
-// Set your Subnet IP address
-IPAddress subnet(255, 255, 255, 0);
-#endif
 #ifdef WEBSERVER
 const char* http_username = "ed";  // username to webserver authentication;
 const char* http_password = "ed4901780";  // password to webserver authentication;
 
 #endif  // WEBSERVER
+
 // MQTT
 #ifdef MQTT
 const char* mqtt_user = "freezer";      // Set NULL for no username
@@ -54,7 +48,6 @@ const char* mqtt_device_name =
     "Battery Emulator";  // Custom device name in Home Assistant. Previously, the name was automatically set to "BatteryEmulator_esp32-XXXXXX"
 #endif  // MQTT_MANUAL_TOPIC_OBJECT_NAME
 #endif  // USE_MQTT
-#endif  // WIFI
 
 #ifdef EQUIPMENT_STOP_BUTTON
 // Equipment stop button behavior. Use NC button for safety reasons.

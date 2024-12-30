@@ -9,6 +9,7 @@
 
 #include "devboard/hal/hal.h"
 #include "devboard/safety/safety.h"
+#include "devboard/utils/logging.h"
 #include "devboard/utils/time_meas.h"
 #include "devboard/utils/types.h"
 
@@ -50,6 +51,12 @@
 
 #ifndef BATTERY_SELECTED
 #error No battery selected! Choose one from the USER_SETTINGS.h file
+#endif
+
+#ifdef LOG_CAN_TO_SD
+#if !defined(HW_LILYGO)
+#error The SD card logging feature is only available on LilyGo hardware
+#endif
 #endif
 
 #endif
