@@ -37,18 +37,14 @@
 //#define DOUBLE_BATTERY  //Enable this line if you use two identical batteries at the same time (requires CAN_ADDON setup)
 
 /* Select inverter communication protocol. See Wiki for which to use with your inverter: https://github.com/dalathegreat/BYD-Battery-Emulator-For-Gen24/wiki */
-<<<<<<< HEAD
 //#define AFORE_CAN //Enable this line to emulate an "Afore battery" over CAN bus
 //#define BYD_CAN  //Enable this line to emulate a "BYD Battery-Box Premium HVS" over CAN Bus
 //#define BYD_SMA //Enable this line to emulate a SMA compatible "BYD Battery-Box HVS 10.2KW battery" over CAN bus
 #define BYD_MODBUS  //Enable this line to emulate a "BYD 11kWh HVM battery" over Modbus RTU
-=======
 //#define AFORE_CAN        //Enable this line to emulate an "Afore battery" over CAN bus
 //#define BYD_CAN          //Enable this line to emulate a "BYD Battery-Box Premium HVS" over CAN Bus
 //#define BYD_KOSTAL_RS485 //Enable this line to emulate a "BYD 11kWh HVM battery" over Kostal RS485
-//#define BYD_MODBUS       //Enable this line to emulate a "BYD 11kWh HVM battery" over Modbus RTU
 //#define BYD_SMA          //Enable this line to emulate a SMA compatible "BYD Battery-Box HVS 10.2KW battery" over CAN bus
->>>>>>> 8d103c57225a276d048ddf35c5680f94211f9424
 //#define FOXESS_CAN       //Enable this line to emulate a "HV2600/ECS4100 battery" over CAN bus
 //#define PYLON_LV_CAN     //Enable this line to emulate a "48V Pylontech battery" over CAN bus
 //#define PYLON_CAN        //Enable this line to emulate a "High Voltage Pylontech battery" over CAN bus
@@ -72,7 +68,7 @@
 /* Contactor settings. If you have a battery that does not activate contactors via CAN, configure this section */
 #define PRECHARGE_TIME_MS 500  //Precharge time in milliseconds. Modify to suit your inverter (See wiki for more info)
 //#define CONTACTOR_CONTROL_DOUBLE_BATTERY //Enable this line to have the emulator hardware control secondary set of contactors for double battery setups (See wiki for pins)
-//#define PWM_CONTACTOR_CONTROL //Enable this line to use PWM for CONTACTOR_CONTROL, which lowers power consumption and heat generation. CONTACTOR_CONTROL must be enabled.
+#define PWM_CONTACTOR_CONTROL //Enable this line to use PWM for CONTACTOR_CONTROL, which lowers power consumption and heat generation. CONTACTOR_CONTROL must be enabled.
 //#define NC_CONTACTORS         //Enable this line to control normally closed contactors. CONTACTOR_CONTROL must be enabled for this option. Extremely rare setting!
 
 /* Other options */
@@ -102,7 +98,7 @@
 //#define EQUIPMENT_STOP_BUTTON      // Enable this to allow an equipment stop button connected to the Battery-Emulator to disengage the battery
 
 /* MQTT options */
-// #define MQTT  // Enable this line to enable MQTT
+#define MQTT  // Enable this line to enable MQTT
 #define MQTT_SERVER "192.168.28.160"
 #define MQTT_PORT 1883
 #define MQTT_MANUAL_TOPIC_OBJECT_NAME  // Enable this to use custom MQTT topic, object ID prefix, and device name.    \
