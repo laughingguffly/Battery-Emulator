@@ -1122,11 +1122,11 @@ void update_values_battery() {  //This function maps all the values fetched via 
   logging.print("Cellstats, Max: ");
   logging.print(battery_cell_max_v);
   logging.print("mV (cell ");
-  logging.print(battery_max_vno);
+  logging.print(battery_BrickVoltageMaxNum);
   logging.print("), Min: ");
   logging.print(battery_cell_min_v);
   logging.print("mV (cell ");
-  logging.print(battery_min_vno);
+  logging.print(battery_BrickVoltageMinNum);
   logging.print("), Imbalance: ");
   logging.print(battery_cell_deviation_mV);
   logging.println("mV.");
@@ -2713,7 +2713,7 @@ void print_SOC(char* header, int SOC) {
   if (hundredth < 10)
     logging.print(0);
   logging.print(hundredth);
-  logging.println("%");
+  logging.println("pct");
 }
 
 void printFaultCodesIfActive() {
@@ -2732,7 +2732,7 @@ void printFaultCodesIfActive() {
   }
   // Check each symbol and print debug information if its value is 1
   // 0X3AA: 938 HVP_alertMatrix1
-  printDebugIfActive(battery_WatchdogReset, "ERROR: The processor has experienced a reset due to watchdog reset");
+  //printDebugIfActive(battery_WatchdogReset, "ERROR: The processor has experienced a reset due to watchdog reset"); //Uncommented due to not affecting usage
   printDebugIfActive(battery_PowerLossReset, "ERROR: The processor has experienced a reset due to power loss");
   printDebugIfActive(battery_SwAssertion, "ERROR: An internal software assertion has failed");
   printDebugIfActive(battery_CrashEvent, "ERROR: crash signal is detected by HVP");
@@ -2900,7 +2900,7 @@ void printFaultCodesIfActive_battery2() {
         "disable the inverter protocol to proceed with contactor closing");
   }
   // Check each symbol and print debug information if its value is 1
-  printDebugIfActive(battery2_WatchdogReset, "ERROR: The processor has experienced a reset due to watchdog reset");
+  //printDebugIfActive(battery2_WatchdogReset, "ERROR: The processor has experienced a reset due to watchdog reset"); //Uncommented due to not affecting usage
   printDebugIfActive(battery2_PowerLossReset, "ERROR: The processor has experienced a reset due to power loss");
   printDebugIfActive(battery2_SwAssertion, "ERROR: An internal software assertion has failed");
   printDebugIfActive(battery2_CrashEvent, "ERROR: crash signal is detected by HVP");

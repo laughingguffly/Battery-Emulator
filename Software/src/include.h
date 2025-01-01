@@ -20,12 +20,7 @@
 /* - ERROR CHECKS BELOW, DON'T TOUCH - */
 
 #if !defined(HW_CONFIGURED)
-#error You must select a HW to run on!
-#endif
-
-#if defined(CAN_ADDON) && defined(CANFD_ADDON)
-// Check that user did not try to use dual can and fd-can on same hardware pins
-#error CAN_ADDON AND CANFD_ADDON CANNOT BE USED SIMULTANEOUSLY
+#error You must select a target hardware in the USER_SERTTINGS.h file!
 #endif
 
 #ifdef USE_CANFD_INTERFACE_AS_CLASSIC_CAN
