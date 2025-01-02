@@ -74,11 +74,16 @@
 //#define CONTACTOR_CONTROL_DOUBLE_BATTERY //Enable this line to have the emulator hardware control secondary set of contactors for double battery setups (See wiki for pins)
 #define PWM_CONTACTOR_CONTROL //Enable this line to use PWM for CONTACTOR_CONTROL, which lowers power consumption and heat generation. CONTACTOR_CONTROL must be enabled.
 //#define NC_CONTACTORS         //Enable this line to control normally closed contactors. CONTACTOR_CONTROL must be enabled for this option. Extremely rare setting!
+//#define PERIODIC_BMS_RESET    //Enable to have the emulator powercycle the connected battery every 24hours via GPIO. Useful for some batteries like Nissan LEAF
+
+/* Shunt/Contactor settings */
+//#define BMW_SBOX  // SBOX relay control & battery current/voltage measurement
 
 /* Other options */
+//#define LOG_TO_SD              //Enable this line to log diagnostic data to SD card
 //#define DEBUG_VIA_USB          //Enable this line to have the USB port output serial diagnostic data while program runs (WARNING, raises CPU load, do not use for production)
 //#define DEBUG_VIA_WEB          //Enable this line to log diagnostic data while program runs, which can be viewed via webpage (WARNING, slightly raises CPU load, do not use for production)
-#if defined(DEBUG_VIA_USB) || defined(DEBUG_VIA_WEB)
+#if defined(DEBUG_VIA_USB) || defined(DEBUG_VIA_WEB) || defined(LOG_TO_SD)
 #define DEBUG_LOG
 #endif
 
@@ -155,6 +160,7 @@ typedef struct {
   CAN_Interface inverter;
   CAN_Interface battery_double;
   CAN_Interface charger;
+  CAN_Interface shunt;
 } CAN_Configuration;
 extern volatile CAN_Configuration can_config;
 extern volatile uint8_t AccessPointEnabled;

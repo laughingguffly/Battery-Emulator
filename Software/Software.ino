@@ -51,7 +51,7 @@
 #endif  // WIFI
 
 // The current software version, shown on webserver
-const char* version_number = "8.0.dev";
+const char* version_number = "8.1.dev";
 
 // Interval settings
 uint16_t intervalUpdateValues = INTERVAL_1_S;  // Interval at which to update inverter values / Modbus registers
@@ -104,7 +104,7 @@ void setup() {
                           TASK_CONNECTIVITY_PRIO, &connectivity_loop_task, WIFI_CORE);
 #endif
 
-#ifdef LOG_CAN_TO_SD
+#if defined(LOG_CAN_TO_SD) || defined(LOG_TO_SD)
   xTaskCreatePinnedToCore((TaskFunction_t)&logging_loop, "logging_loop", 4096, &logging_task_time_us,
                           TASK_CONNECTIVITY_PRIO, &logging_loop_task, WIFI_CORE);
 #endif
@@ -124,6 +124,9 @@ void setup() {
   setup_battery();
 #ifdef EQUIPMENT_STOP_BUTTON
   init_equipment_stop_button();
+#endif
+#ifdef CAN_SHUNT_SELECTED
+  setup_can_shunt();
 #endif
   // BOOT button at runtime is used as an input for various things
   pinMode(0, INPUT_PULLUP);
@@ -148,14 +151,19 @@ void loop() {
 #endif
 }
 
-#ifdef LOG_CAN_TO_SD
+#if defined(LOG_CAN_TO_SD) || defined(LOG_TO_SD)
 void logging_loop(void* task_time_us) {
 
-  init_logging_buffer();
+  init_logging_buffers();
   init_sdcard();
 
   while (true) {
+#ifdef LOG_TO_SD
+    write_log_to_sdcard();
+#endif
+#ifdef LOG_CAN_TO_SD
     write_can_frame_to_sdcard();
+#endif
   }
 }
 #endif

@@ -21,7 +21,7 @@ unsigned long ota_progress_millis = 0;
 #include "cellmonitor_html.h"
 #include "debug_logging_html.h"
 #include "events_html.h"
-#include "index_html.cpp"
+#include "index_html.h"
 #include "settings_html.h"
 
 MyTimer ota_timeout_timer = MyTimer(15000);
@@ -30,8 +30,6 @@ bool ota_active = false;
 const char get_firmware_info_html[] = R"rawliteral(%X%)rawliteral";
 
 void init_webserver() {
-
-  String content = index_html;
 
   server.on("/logout", HTTP_GET, [](AsyncWebServerRequest* request) { request->send(401); });
 
@@ -63,13 +61,15 @@ void init_webserver() {
 
   // Route for going to CAN logging web page
   server.on("/canlog", HTTP_GET, [](AsyncWebServerRequest* request) {
-    request->send_P(200, "text/html", index_html, can_logger_processor);
+    AsyncWebServerResponse* response = request->beginResponse(200, "text/html", can_logger_processor());
+    request->send(response);
   });
 
-#ifdef DEBUG_VIA_WEB
+#if defined(DEBUG_VIA_WEB) || defined(LOG_TO_SD)
   // Route for going to debug logging web page
   server.on("/log", HTTP_GET, [](AsyncWebServerRequest* request) {
-    request->send_P(200, "text/html", index_html, debug_logger_processor);
+    AsyncWebServerResponse* response = request->beginResponse(200, "text/html", debug_logger_processor());
+    request->send(response);
   });
 #endif  // DEBUG_VIA_WEB
 
@@ -123,6 +123,22 @@ void init_webserver() {
   });
 #endif
 
+#ifdef LOG_TO_SD
+  // Define the handler to delete log file
+  server.on("/delete_log", HTTP_GET, [](AsyncWebServerRequest* request) {
+    delete_log();
+    request->send_P(200, "text/plain", "Log file deleted");
+  });
+
+  // Define the handler to export debug log
+  server.on("/export_log", HTTP_GET, [](AsyncWebServerRequest* request) {
+    pause_log_writing();
+    request->send(SD, LOG_FILE, String(), true);
+    resume_log_writing();
+  });
+#endif
+
+#ifndef LOG_TO_SD
   // Define the handler to export debug log
   server.on("/export_log", HTTP_GET, [](AsyncWebServerRequest* request) {
     String logs = String(datalayer.system.info.logged_can_messages);
@@ -149,6 +165,7 @@ void init_webserver() {
     response->addHeader("Content-Disposition", String("attachment; filename=\"") + String(filename) + "\"");
     request->send(response);
   });
+#endif
 
   // Route for going to cellmonitor web page
   server.on("/cellmonitor", HTTP_GET, [](AsyncWebServerRequest* request) {
@@ -655,6 +672,12 @@ String processor(const String& var) {
     }
     content += "</h4>";
 
+#ifdef CAN_SHUNT_SELECTED
+    content += "<h4 style='color: white;'>Shunt protocol: ";
+    content += datalayer.system.info.shunt_protocol;
+    content += "</h4>";
+#endif
+
 #if defined CHEVYVOLT_CHARGER || defined NISSANLEAF_CHARGER
     content += "<h4 style='color: white;'>Charger protocol: ";
 #ifdef CHEVYVOLT_CHARGER
@@ -1055,7 +1078,7 @@ String processor(const String& var) {
     content += "<button onclick='Settings()'>Change Settings</button> ";
     content += "<button onclick='Advanced()'>More Battery Info</button> ";
     content += "<button onclick='CANlog()'>CAN logger</button> ";
-#ifdef DEBUG_VIA_WEB
+#if defined(DEBUG_VIA_WEB) || defined(LOG_TO_SD)
     content += "<button onclick='Log()'>Log</button> ";
 #endif  // DEBUG_VIA_WEB
     content += "<button onclick='Cellmon()'>Cellmonitor</button> ";
