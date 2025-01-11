@@ -48,7 +48,7 @@ const char* mqtt_user = "freezer";      // Set NULL for no username
 const char* mqtt_password = "H87UHM876876812";  // Set NULL for no password
 #ifdef MQTT_MANUAL_TOPIC_OBJECT_NAME
 const char* mqtt_topic_name =
-    "BE";  // Custom MQTT topic name. Previously, the name was automatically set to "battery-emulator_esp32-XXXXXX"
+    "pebbles/battery";  // Custom MQTT topic name. Previously, the name was automatically set to "battery-emulator_esp32-XXXXXX"
 const char* mqtt_object_id_prefix =
     "be_";  // Custom prefix for MQTT object ID. Previously, the prefix was automatically set to "esp32-XXXXXX_"
 const char* mqtt_device_name =
