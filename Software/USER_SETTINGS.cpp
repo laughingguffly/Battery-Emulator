@@ -56,6 +56,8 @@ const char* mqtt_device_name =
 #endif  // MQTT_MANUAL_TOPIC_OBJECT_NAME
 #endif  // USE_MQTT
 #endif  // WIFI
+const char* ha_device_id =
+    "battery-emulator";  // Custom device ID in Home Assistant. Previously, the ID was always "battery-emulator"
 
 #ifdef EQUIPMENT_STOP_BUTTON
 // Equipment stop button behavior. Use NC button for safety reasons.
