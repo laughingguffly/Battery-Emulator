@@ -39,6 +39,11 @@ Here's how to connect the high voltage lines
 For more examples showing wiring, see each battery types own Wiki page. For instance the [Nissan LEAF page](https://github.com/dalathegreat/Battery-Emulator/wiki/Battery:-Nissan-LEAF---e%E2%80%90NV200)
 
 ## How to compile the software 💻
+
+Start by watching this [quickstart guide](https://www.youtube.com/watch?v=hcl2GdHc0Y0)
+
+[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/hcl2GdHc0Y0/0.jpg)](https://www.youtube.com/watch?v=hcl2GdHc0Y0)
+
 1. Download the Arduino IDE: https://www.arduino.cc/en/software
 2. Open the Arduino IDE.
 3. Click `File` menu -> `Preferences` -> `Additional Development` -> `Additional Board Manager URLs` -> Enter the URL in the input box: `https://raw.githubusercontent.com/espressif/arduino-esp32/gh-pages/package_esp32_index.json` and click OK.
@@ -63,10 +68,6 @@ NOTE: On Mac, the following USB driver may need to be installed: https://github.
 
 NOTE: If you see garbled messages on the serial console, change the serial console to match the baud rate to the code, currently 115200.
 
-This video explains all the above mentioned steps:
-<https://youtu.be/_mH2AjnAjDk>
-
-
 ### Linux Development Environment Setup
 In addition to the steps above, ESP32 requires a dependency for a Python module, pyserial install using the cli.\
 ```python3 -m pip install pyserial```
@@ -85,8 +86,8 @@ This code uses the following excellent libraries:
 - [eModbus/eModbus](https://github.com/eModbus/eModbus) MIT-License
 - [knolleary/pubsubclient](https://github.com/knolleary/pubsubclient) MIT-License
 - [mackelec/SerialDataLink](https://github.com/mackelec/SerialDataLink)
-- [me-no-dev/AsyncTCP](https://github.com/me-no-dev/AsyncTCP) LGPL-3.0 license
-- [me-no-dev/ESPAsyncWebServer](https://github.com/me-no-dev/ESPAsyncWebServer)
+- [mathieucarbou/AsyncTCPsock](https://github.com/mathieucarbou/AsyncTCPSock) LGPL-3.0 license
+- [mathieucarbou/ESPAsyncWebServer](https://github.com/mathieucarbou/ESPAsyncWebServer) LGPL-3.0 license
 - [miwagner/ESP32-Arduino-CAN](https://github.com/miwagner/ESP32-Arduino-CAN/) MIT-License
 - [pierremolinaro/acan2515](https://github.com/pierremolinaro/acan2515) MIT-License
 - [pierremolinaro/acan2517FD](https://github.com/pierremolinaro/acan2517FD) MIT-License
