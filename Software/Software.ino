@@ -24,14 +24,6 @@
 #include "src/devboard/utils/timer.h"
 #include "src/devboard/utils/value_mapping.h"
 #include "src/include.h"
-#include "src/lib/YiannisBourkelis-Uptime-Library/src/uptime.h"
-#include "src/lib/YiannisBourkelis-Uptime-Library/src/uptime_formatter.h"
-#include "src/lib/bblanchon-ArduinoJson/ArduinoJson.h"
-#include "src/lib/eModbus-eModbus/Logging.h"
-#include "src/lib/eModbus-eModbus/ModbusServerRTU.h"
-#include "src/lib/eModbus-eModbus/scripts/mbServerFCs.h"
-#include "src/lib/miwagner-ESP32-Arduino-CAN/CAN_config.h"
-#include "src/lib/miwagner-ESP32-Arduino-CAN/ESP32CAN.h"
 #ifndef AP_PASSWORD
 #error \
     "Initial setup not completed, USER_SECRETS.h is missing. Please rename the file USER_SECRETS.TEMPLATE.h to USER_SECRETS.h and fill in the required credentials. This file is ignored by version control to keep sensitive information private."
@@ -52,30 +44,18 @@
 #include "src/devboard/mqtt/mqtt.h"
 #endif  // MQTT
 #endif  // WIFI
+#ifdef PERIODIC_BMS_RESET_AT
+#include "src/devboard/utils/ntp_time.h"
+#endif
+volatile unsigned long long bmsResetTimeOffset = 0;
 
 // The current software version, shown on webserver
-const char* version_number = "8.2.0";
+const char* version_number = "8.3.0";
 
 // Interval settings
 uint16_t intervalUpdateValues = INTERVAL_1_S;  // Interval at which to update inverter values / Modbus registers
 unsigned long previousMillis10ms = 0;
 unsigned long previousMillisUpdateVal = 0;
-
-// Common charger parameters
-volatile float charger_setpoint_HV_VDC = 0.0f;
-volatile float charger_setpoint_HV_IDC = 0.0f;
-volatile float charger_setpoint_HV_IDC_END = 0.0f;
-bool charger_HV_enabled = false;
-bool charger_aux12V_enabled = false;
-
-// Common charger statistics, instantaneous values
-float charger_stat_HVcur = 0;
-float charger_stat_HVvol = 0;
-float charger_stat_ACcur = 0;
-float charger_stat_ACvol = 0;
-float charger_stat_LVcur = 0;
-float charger_stat_LVvol = 0;
-
 // Task time measurement for debugging and for setting CPU load events
 int64_t core_task_time_us;
 MyTimer core_task_timer_10s(INTERVAL_10_S);
@@ -147,6 +127,10 @@ void setup() {
 
   xTaskCreatePinnedToCore((TaskFunction_t)&core_loop, "core_loop", 4096, &core_task_time_us, TASK_CORE_PRIO,
                           &main_loop_task, CORE_FUNCTION_CORE);
+#ifdef PERIODIC_BMS_RESET_AT
+  bmsResetTimeOffset = getTimeOffsetfromNowUntil(PERIODIC_BMS_RESET_AT);
+#endif
+
 }
 
 // Perform main program functions
@@ -207,6 +191,7 @@ void connectivity_loop(void* task_time_us) {
     mqtt_loop();
     END_TIME_MEASUREMENT_MAX(mqtt, datalayer.system.status.mqtt_task_10s_max_us);
 #endif
+
 
 #ifdef FUNCTION_TIME_MEASUREMENT
     if (connectivity_task_timer_10s.elapsed()) {
