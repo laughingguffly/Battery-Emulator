@@ -12,6 +12,6 @@ void init_mqtt(void);
 void mqtt_loop(void);
 unsigned long long getNtpTimeInMillis();
 unsigned long long millisToNextTargetTime(unsigned long long currentMillis, int targetTime);
-unsigned long  getTimeOffsetfromNowUntil(int targetTime);
+unsigned long long  getTimeOffsetfromNowUntil(int targetTime);
 
 #endif

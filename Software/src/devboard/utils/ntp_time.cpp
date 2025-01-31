@@ -6,7 +6,7 @@ const char *ntpServer1 = "pool.ntp.org";
 const char *ntpServer2 = "time.nist.gov";
 
 // Target time in 24-hour format (modifiable, e.g., 230 for 02:30)
-int targetTime = 230;
+//int targetTime = 230;
 
 // A list of rules for your zone could be obtained from https://github.com/esp8266/Arduino/blob/master/cores/esp8266/TZ.h
 // TimeZone rule for Europe/Rome including daylight adjustment rules (optional)
@@ -29,7 +29,7 @@ unsigned long long getNtpTimeInMillis() {
             break;
         }
         delay(1000);
-        //Serial.println("Waiting for NTP time...");
+        Serial.println("Waiting for NTP time...");
     }
 
     if (!getLocalTime(&timeinfo)) {
@@ -55,15 +55,22 @@ unsigned long long millisToNextTargetTime(unsigned long long currentMillis, int 
     timeinfo->tm_hour = hour;
     timeinfo->tm_min = minute;
     timeinfo->tm_sec = 0;
-
+    
     // Increment day if the current time is past the target time
     if (mktime(timeinfo) <= currentTime) {
         timeinfo->tm_mday += 1;
     }
+    time_t nextTargetTime = mktime(timeinfo);
+    unsigned long long nextTargetMillis = static_cast<unsigned long long>(nextTargetTime) * 1000;
+    Serial.println("nextTargetMillis - currentMillis: ");
+    Serial.println(nextTargetMillis - currentMillis);
+    return nextTargetMillis - currentMillis;
 }
 
-unsigned long  getTimeOffsetfromNowUntil(int targetTime) {
+unsigned long long  getTimeOffsetfromNowUntil(int targetTime) {
   unsigned long long timeinMillis = getNtpTimeInMillis();
+  Serial.println("targetTime");
+  Serial.println(targetTime);
   if (timeinMillis !=0) {
     return millisToNextTargetTime(timeinMillis, targetTime);
   }
