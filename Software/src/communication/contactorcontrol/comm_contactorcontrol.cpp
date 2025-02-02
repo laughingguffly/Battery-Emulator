@@ -255,8 +255,7 @@ void handle_BMSpower() {
 #endif  //PERIODIC_BMS_RESET
 
   // If power has been removed for 30 seconds, restore the power and resume the emulator
-  if (datalayer.system.status.BMS_reset_in_progress &&
-      currentTime - lastPowerRemovalTime >= powerRemovalDuration) {
+  if (datalayer.system.status.BMS_reset_in_progress && currentTime - lastPowerRemovalTime >= powerRemovalDuration) {
     // Reapply power to the BMS
     digitalWrite(BMS_POWER, HIGH);
 #ifdef BMS_2_POWER

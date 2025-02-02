@@ -14,6 +14,7 @@
 //#define BMW_PHEV_BATTERY
 //#define BOLT_AMPERA_BATTERY
 //#define BYD_ATTO_3_BATTERY
+//#define FOXESS_BATTERY
 //#define CELLPOWER_BMS
 //#define CHADEMO_BATTERY	//NOTE: inherently enables CONTACTOR_CONTROL below
 //#define IMIEV_CZERO_ION_BATTERY
@@ -85,6 +86,7 @@
 //#define REMOTE_BMS_RESET      //Enable to allow the emulator to remotely trigger a powercycle of the battery via MQTT. Useful for some batteries like Nissan LEAF
 #define PERIODIC_BMS_RESET_AT 525 // In 24 Hour format WITHOUT leading 0. e.g 0230 should be 230.
 /* Shunt/Contactor settings (Optional) */
+
 //#define BMW_SBOX  // SBOX relay control & battery current/voltage measurement
 
 /* Select charger used (Optional) */
@@ -100,7 +102,7 @@
 //#define INTERLOCK_REQUIRED     //Nissan LEAF specific setting, if enabled requires both high voltage conenctors to be seated before starting
 //#define LOG_TO_SD              //Enable this line to log diagnostic data to SD card
 //#define LOG_CAN_TO_SD          //Enable this line to log incoming/outgoing CAN & CAN-FD messages to SD card
-// #define DEBUG_VIA_USB          //Enable this line to have the USB port output serial diagnostic data while program runs (WARNING, raises CPU load, do not use for production)
+//#define DEBUG_VIA_USB          //Enable this line to have the USB port output serial diagnostic data while program runs (WARNING, raises CPU load, do not use for production)
 //#define DEBUG_VIA_WEB          //Enable this line to log diagnostic data while program runs, which can be viewed via webpage (WARNING, slightly raises CPU load, do not use for production)
 //#define DEBUG_CAN_DATA         //Enable this line to print incoming/outgoing CAN & CAN-FD messages to USB serial (WARNING, raises CPU load, do not use for production)
 
@@ -124,9 +126,8 @@
 //#define FUNCTION_TIME_MEASUREMENT  // Enable this to record execution times and present them in the web UI (WARNING, raises CPU load, do not use for production)
 
 /* MQTT options */
-// #define MQTT  // Enable this line to enable MQTT
-#define MQTT_SERVER "192.168.28.160"
-#define MQTT_PORT 1883
+// #define MQTT     // Enable this line to enable MQTT
+#define MQTT_QOS 0  // MQTT Quality of Service (0, 1, or 2)
 #define MQTT_MANUAL_TOPIC_OBJECT_NAME
 // Enable MQTT_MANUAL_TOPIC_OBJECT_NAME to use custom MQTT topic, object ID prefix, and device name.
 // WARNING: If this is not defined, the previous default naming format 'battery-emulator_esp32-XXXXXX' (based on hardware ID) will be used.
