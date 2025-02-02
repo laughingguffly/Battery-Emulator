@@ -132,7 +132,6 @@ void setup() {
   logging.println("bmsResetTimeOffset");
   logging.println(bmsResetTimeOffset);
 #endif
-
 }
 
 // Perform main program functions
@@ -193,7 +192,6 @@ void connectivity_loop(void* task_time_us) {
     mqtt_loop();
     END_TIME_MEASUREMENT_MAX(mqtt, datalayer.system.status.mqtt_task_10s_max_us);
 #endif
-
 
 #ifdef FUNCTION_TIME_MEASUREMENT
     if (connectivity_task_timer_10s.elapsed()) {

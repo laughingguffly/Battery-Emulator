@@ -1,6 +1,6 @@
 #include "ntp_time.h"
-#include "time.h"
 #include "../../include.h"
+#include "time.h"
 
 const unsigned long millisInADay = 24 * 60 * 60 * 1000;  // 24 hours in milliseconds
 
@@ -55,10 +55,10 @@ unsigned long long getTimeOffsetfromNowUntil(int targetTime) {
   unsigned long long timeinMillis = getNtpTimeInMillis();
   if (timeinMillis != 0) {
     logging.println("Time in millis: " + String(timeinMillis));
-    unsigned long long timeOffsetUntilTargetTime =  millisInADay - (millisToNextTargetTime(timeinMillis, targetTime));
+    unsigned long long timeOffsetUntilTargetTime = millisInADay - (millisToNextTargetTime(timeinMillis, targetTime));
     logging.println("Time offset until target time: " + String(timeOffsetUntilTargetTime));
     return timeOffsetUntilTargetTime;
   } else
-    
+
     return 0;
 }
